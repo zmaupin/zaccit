@@ -1,13 +1,22 @@
 package main
 
 import (
-	"io"
+	"html/template"
 	"log"
 	"net/http"
 )
 
+func check(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func handleHome(writer http.ResponseWriter, request *http.Request) {
-	io.WriteString(writer, "Hello! This is the home page.")
+	html, err := template.ParseFiles("home.html")
+	check(err)
+	err = html.Execute(writer, nil)
+	check(err)
 }
 
 func main() {
