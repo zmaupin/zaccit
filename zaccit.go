@@ -47,5 +47,8 @@ func handleHome(writer http.ResponseWriter, request *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handleHome)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	port := os.Getenv("PORT")
+	httpPort := ":" + port
+	log.Fatal(http.ListenAndServe(httpPort, nil))
 }
