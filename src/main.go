@@ -8,6 +8,10 @@ import (
 	"os"
 )
 
+type Posts struct {
+	Messages []string
+}
+
 func check(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -31,9 +35,12 @@ func getPosts(filename string) []string {
 }
 
 func handleHome(writer http.ResponseWriter, request *http.Request) {
-	posts := getPosts("assets/posts.txt")
+	messages := getPosts("assets/posts.txt")
 	html, err := template.ParseFiles("assets/home.html")
 	check(err)
+	posts := Posts{
+		Messages: messages,
+	}
 	err = html.Execute(writer, posts)
 	check(err)
 }
